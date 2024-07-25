@@ -639,6 +639,14 @@ mod tests {
         FORMAT_BOX_CHARS, FORMAT_CLEAN, FORMAT_DEFAULT, FORMAT_NO_COLSEP, FORMAT_NO_LINESEP,
     };
 
+    fn default_table() -> Table {
+        let mut table = Table::new();
+        table.set_titles(crate::row!["T1", "T2"]);
+        table.add_row(crate::row!["a", "b"]);
+        table.add_row(crate::row!["c", "d"]);
+        table
+    }
+
     #[test]
     fn table() {
         let mut table = Table::new();
@@ -1112,6 +1120,143 @@ mod tests {
         println!("{}", table.to_string().replace("\r\n", "\n"));
         assert_eq!(out, table.to_string().replace("\r\n", "\n"));
         assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_format_box_default() {
+        let mut table = default_table();
+        table.set_format(*format::consts::FORMAT_BOX_DEFAULT);
+        let out = "\
+┌────┬────┐
+│ T1 │ T2 │
+╞════╪════╡
+│ a  │ b  │
+├────┼────┤
+│ c  │ d  │
+└────┴────┘
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_format_box_no_linesep_with_title() {
+        let mut table = default_table();
+        table.set_format(*format::consts::FORMAT_BOX_NO_LINESEP_WITH_TITLE);
+        let out = "\
+┌────┬────┐
+│ T1 │ T2 │
+├────┼────┤
+│ a  │ b  │
+│ c  │ d  │
+└────┴────┘
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_format_box_double() {
+        let mut table = default_table();
+        table.set_format(*format::consts::FORMAT_BOX_DOUBLE);
+        let out = "\
+╔════╦════╗
+║ T1 ║ T2 ║
+╠════╬════╣
+║ a  ║ b  ║
+╠════╬════╣
+║ c  ║ d  ║
+╚════╩════╝
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_format_box_double_outline() {
+        let mut table = default_table();
+        table.set_format(*format::consts::FORMAT_BOX_DOUBLE_OUTLINE);
+        let out = "\
+╔════╤════╗
+║ T1 │ T2 ║
+╠════╪════╣
+║ a  │ b  ║
+╟────┼────╢
+║ c  │ d  ║
+╚════╧════╝
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_format_arc_default() {
+        let mut table = default_table();
+        table.set_format(*format::consts::FORMAT_ARC_DEFAULT);
+        let out = "\
+╭────┬────╮
+│ T1 │ T2 │
+╞════╪════╡
+│ a  │ b  │
+├────┼────┤
+│ c  │ d  │
+╰────┴────╯
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(7, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_format_arc_borders_only() {
+        let mut table = default_table();
+        table.set_format(*format::consts::FORMAT_ARC_BORDERS_ONLY);
+        let out = "\
+╭────┬────╮
+│ T1 │ T2 │
+╞════╪════╡
+│ a  │ b  │
+│ c  │ d  │
+╰────┴────╯
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
+    }
+
+    #[test]
+    fn test_format_arc_no_linesep_with_title() {
+        let mut table = default_table();
+        table.set_format(*format::consts::FORMAT_ARC_NO_LINESEP_WITH_TITLE);
+        let out = "\
+╭────┬────╮
+│ T1 │ T2 │
+├────┼────┤
+│ a  │ b  │
+│ c  │ d  │
+╰────┴────╯
+";
+        println!("{}", out);
+        println!("____");
+        println!("{}", table.to_string().replace("\r\n", "\n"));
+        assert_eq!(out, table.to_string().replace("\r\n", "\n"));
+        assert_eq!(6, table.print(&mut StringWriter::new()).unwrap());
     }
 
     #[test]

@@ -360,6 +360,15 @@ pub mod consts {
         /// A line separator made of `=` and `+`
         static ref EQU_PLUS_SEP: LineSeparator = LineSeparator::new('=', '+', '+', '+');
 
+        // Box drawing characters
+        static ref BOX_TOP_SEP: LineSeparator = LineSeparator::new('─', '┬', '┌', '┐');
+        static ref BOX_MID_SEP: LineSeparator = LineSeparator::new('─', '┼', '├', '┤');
+        static ref BOX_BOT_SEP: LineSeparator = LineSeparator::new('─', '┴', '└', '┘');
+
+        // Arc drawing characters
+        static ref ARC_TOP_SEP: LineSeparator = LineSeparator::new('─', '┬', '╭', '╮');
+        static ref ARC_BOT_SEP: LineSeparator = LineSeparator::new('─', '┴', '╰', '╯');
+
         /// Default table format
         ///
         /// # Example
@@ -373,14 +382,14 @@ pub mod consts {
         /// +----+----+
         /// ```
         pub static ref FORMAT_DEFAULT: TableFormat = FormatBuilder::new()
-                                                                    .column_separator('|')
-                                                                    .borders('|')
-                                                                    .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Title, *EQU_PLUS_SEP)
-                                                                    .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Top, *MINUS_PLUS_SEP)
-                                                                    .padding(1, 1)
-                                                                    .build();
+            .column_separator('|')
+            .borders('|')
+            .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Title, *EQU_PLUS_SEP)
+            .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Top, *MINUS_PLUS_SEP)
+            .padding(1, 1)
+            .build();
 
         /// Similar to `FORMAT_DEFAULT` but without special separator after title line
         ///
@@ -395,14 +404,14 @@ pub mod consts {
         /// +----+----+
         /// ```
         pub static ref FORMAT_NO_TITLE: TableFormat = FormatBuilder::new()
-                                                                    .column_separator('|')
-                                                                    .borders('|')
-                                                                    .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Title, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Top, *MINUS_PLUS_SEP)
-                                                                    .padding(1, 1)
-                                                                    .build();
+            .column_separator('|')
+            .borders('|')
+            .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Title, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Top, *MINUS_PLUS_SEP)
+            .padding(1, 1)
+            .build();
 
         /// With no line separator, but with title separator
         ///
@@ -416,13 +425,13 @@ pub mod consts {
         /// +----+----+
         /// ```
         pub static ref FORMAT_NO_LINESEP_WITH_TITLE: TableFormat = FormatBuilder::new()
-                                                                    .column_separator('|')
-                                                                    .borders('|')
-                                                                    .separator(LinePosition::Title, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Top, *MINUS_PLUS_SEP)
-                                                                    .padding(1, 1)
-                                                                    .build();
+            .column_separator('|')
+            .borders('|')
+            .separator(LinePosition::Title, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Top, *MINUS_PLUS_SEP)
+            .padding(1, 1)
+            .build();
 
         /// With no line or title separator
         ///
@@ -435,12 +444,12 @@ pub mod consts {
         /// +----+----+
         /// ```
         pub static ref FORMAT_NO_LINESEP: TableFormat = FormatBuilder::new()
-                                                                    .column_separator('|')
-                                                                    .borders('|')
-                                                                    .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Top, *MINUS_PLUS_SEP)
-                                                                    .padding(1, 1)
-                                                                    .build();
+            .column_separator('|')
+            .borders('|')
+            .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Top, *MINUS_PLUS_SEP)
+            .padding(1, 1)
+            .build();
 
         /// No column separator
         ///
@@ -455,12 +464,12 @@ pub mod consts {
         /// --------
         /// ```
         pub static ref FORMAT_NO_COLSEP: TableFormat = FormatBuilder::new()
-                                                                    .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Title, *EQU_PLUS_SEP)
-                                                                    .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Top, *MINUS_PLUS_SEP)
-                                                                    .padding(1, 1)
-                                                                    .build();
+            .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Title, *EQU_PLUS_SEP)
+            .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Top, *MINUS_PLUS_SEP)
+            .padding(1, 1)
+            .build();
 
         /// Format for printing a table without any separators (only alignment)
         ///
@@ -471,8 +480,8 @@ pub mod consts {
         ///  d   c
         /// ```
         pub static ref FORMAT_CLEAN: TableFormat = FormatBuilder::new()
-                                                                    .padding(1, 1)
-                                                                    .build();
+            .padding(1, 1)
+            .build();
 
         /// Format for a table with only external borders and title separator
         ///
@@ -486,12 +495,12 @@ pub mod consts {
         /// +--------+
         /// ```
         pub static ref FORMAT_BORDERS_ONLY: TableFormat = FormatBuilder::new()
-                                                                    .padding(1, 1)
-                                                                    .separator(LinePosition::Title, *EQU_PLUS_SEP)
-                                                                    .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Top, *MINUS_PLUS_SEP)
-                                                                    .borders('|')
-                                                                    .build();
+            .padding(1, 1)
+            .separator(LinePosition::Title, *EQU_PLUS_SEP)
+            .separator(LinePosition::Bottom, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Top, *MINUS_PLUS_SEP)
+            .borders('|')
+            .build();
 
         /// A table with no external border
         ///
@@ -504,11 +513,11 @@ pub mod consts {
         ///  c  | d
         /// ```
         pub static ref FORMAT_NO_BORDER: TableFormat = FormatBuilder::new()
-                                                                    .padding(1, 1)
-                                                                    .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
-                                                                    .separator(LinePosition::Title, *EQU_PLUS_SEP)
-                                                                    .column_separator('|')
-                                                                    .build();
+            .padding(1, 1)
+            .separator(LinePosition::Intern, *MINUS_PLUS_SEP)
+            .separator(LinePosition::Title, *EQU_PLUS_SEP)
+            .column_separator('|')
+            .build();
 
         /// A table with no external border and no line separation
         ///
@@ -520,42 +529,177 @@ pub mod consts {
         ///  c  | d
         /// ```
         pub static ref FORMAT_NO_BORDER_LINE_SEPARATOR: TableFormat = FormatBuilder::new()
-                                                                    .padding(1, 1)
-                                                                    .separator(LinePosition::Title, *MINUS_PLUS_SEP)
-                                                                    .column_separator('|')
-                                                                    .build();
+            .padding(1, 1)
+            .separator(LinePosition::Title, *MINUS_PLUS_SEP)
+            .column_separator('|')
+            .build();
 
         /// A table with borders and delimiters made with box characters
         ///
         /// # Example
         /// ```text
-        /// ┌────┬────┬────┐
-        /// │ t1 │ t2 │ t3 │
-        /// ├────┼────┼────┤
-        /// │ 1  │ 1  │ 1  │
-        /// ├────┼────┼────┤
-        /// │ 2  │ 2  │ 2  │
-        /// └────┴────┴────┘
+        /// ┌────┬────┐
+        /// │ T1 │ T2 │
+        /// ├────┼────┤
+        /// │ a  │ b  │
+        /// ├────┼────┤
+        /// │ c  │ d  │
+        /// └────┴────┘
         /// ```
         pub static ref FORMAT_BOX_CHARS: TableFormat = FormatBuilder::new()
-                             .column_separator('│')
-                             .borders('│')
-                             .separators(&[LinePosition::Top],
-                                         LineSeparator::new('─',
-                                                            '┬',
-                                                            '┌',
-                                                            '┐'))
-                             .separators(&[LinePosition::Intern],
-                                         LineSeparator::new('─',
-                                                            '┼',
-                                                            '├',
-                                                            '┤'))
-                             .separators(&[LinePosition::Bottom],
-                                         LineSeparator::new('─',
-                                                            '┴',
-                                                            '└',
-                                                            '┘'))
-                             .padding(1, 1)
-                             .build();
+            .column_separator('│')
+            .borders('│')
+            .separators(&[LinePosition::Top], *BOX_TOP_SEP)
+            .separators(&[LinePosition::Intern], *BOX_MID_SEP)
+            .separators(&[LinePosition::Bottom], *BOX_BOT_SEP)
+            .padding(1, 1)
+            .build();
+
+        /// A table with borders and delimiters made with box characters
+        ///
+        /// # Example
+        /// ```text
+        /// ┌────┬────┐
+        /// │ T1 │ T2 │
+        /// ╞════╪════╡
+        /// │ a  │ b  │
+        /// ├────┼────┤
+        /// │ c  │ d  │
+        /// └────┴────┘
+        /// ```
+        pub static ref FORMAT_BOX_DEFAULT: TableFormat = FormatBuilder::new()
+            .column_separator('│')
+            .borders('│')
+            .separators(&[LinePosition::Top], *BOX_TOP_SEP)
+            .separators(&[LinePosition::Title], LineSeparator::new('═', '╪', '╞', '╡'))
+            .separators(&[LinePosition::Intern], *BOX_MID_SEP)
+            .separators(&[LinePosition::Bottom], *BOX_BOT_SEP)
+            .padding(1, 1)
+            .build();
+
+        /// A table with borders and delimiters made with box characters
+        ///
+        /// # Example
+        /// ```text
+        /// ┌────┬────┐
+        /// │ T1 │ T2 │
+        /// ├────┼────┤
+        /// │ a  │ b  │
+        /// │ c  │ d  │
+        /// └────┴────┘
+        /// ```
+        pub static ref FORMAT_BOX_NO_LINESEP_WITH_TITLE: TableFormat = FormatBuilder::new()
+            .column_separator('│')
+            .borders('│')
+            .separator(LinePosition::Title, *BOX_MID_SEP)
+            .separator(LinePosition::Bottom, *BOX_BOT_SEP)
+            .separator(LinePosition::Top, *BOX_TOP_SEP)
+            .padding(1, 1)
+            .build();
+
+        /// A table with borders and delimiters made with box characters
+        ///
+        /// # Example
+        /// ```text
+        /// ╔════╦════╗
+        /// ║ T1 ║ T2 ║
+        /// ╠════╬════╣
+        /// ║ a  ║ b  ║
+        /// ╠════╬════╣
+        /// ║ c  ║ d  ║
+        /// ╚════╩════╝
+        /// ```
+        pub static ref FORMAT_BOX_DOUBLE: TableFormat = FormatBuilder::new()
+            .column_separator('║')
+            .borders('║')
+            .separators(&[LinePosition::Top], LineSeparator::new('═', '╦', '╔', '╗'))
+            .separators(&[LinePosition::Intern], LineSeparator::new('═', '╬', '╠', '╣'))
+            .separators(&[LinePosition::Bottom], LineSeparator::new('═', '╩', '╚', '╝'))
+            .padding(1, 1)
+            .build();
+
+        /// A table with borders and delimiters made with box characters
+        ///
+        /// # Example
+        /// ```text
+        /// ╔════╤════╗
+        /// ║ T1 │ T2 ║
+        /// ╠════╪════╣
+        /// ║ a  │ b  ║
+        /// ╟────┼────╢
+        /// ║ c  │ d  ║
+        /// ╚════╧════╝
+        /// ```
+        pub static ref FORMAT_BOX_DOUBLE_OUTLINE: TableFormat = FormatBuilder::new()
+            .column_separator('│')
+            .borders('║')
+            .separators(&[LinePosition::Top], LineSeparator::new('═', '╤', '╔', '╗'))
+            .separators(&[LinePosition::Title], LineSeparator::new('═', '╪', '╠', '╣'))
+            .separators(&[LinePosition::Intern], LineSeparator::new('─', '┼', '╟', '╢'))
+            .separators(&[LinePosition::Bottom], LineSeparator::new('═', '╧', '╚', '╝'))
+            .padding(1, 1)
+            .build();
+
+        /// A table with borders and delimiters made with arc characters
+        ///
+        /// # Example
+        /// ```text
+        /// ╭────┬────╮
+        /// │ T1 │ T2 │
+        /// ╞════╪════╡
+        /// │ a  │ b  │
+        /// ├────┼────┤
+        /// │ c  │ d  │
+        /// ╰────┴────╯
+        /// ```
+        pub static ref FORMAT_ARC_DEFAULT: TableFormat = FormatBuilder::new()
+            .column_separator('│')
+            .borders('│')
+            .separators(&[LinePosition::Top], *ARC_TOP_SEP)
+            .separators(&[LinePosition::Intern], *BOX_MID_SEP)
+            .separators(&[LinePosition::Title], LineSeparator::new('═', '╪', '╞', '╡'))
+            .separators(&[LinePosition::Bottom], *ARC_BOT_SEP)
+            .padding(1, 1)
+            .build();
+
+        /// A table with borders and delimiters made with arc characters
+        ///
+        /// # Example
+        /// ```text
+        /// ╭────┬────╮
+        /// │ T1 │ T2 │
+        /// ╞════╪════╡
+        /// │ a  │ b  │
+        /// │ c  │ d  │
+        /// ╰────┴────╯
+        /// ```
+        pub static ref FORMAT_ARC_BORDERS_ONLY: TableFormat = FormatBuilder::new()
+            .column_separator('│')
+            .borders('│')
+            .separators(&[LinePosition::Top], *ARC_TOP_SEP)
+            .separators(&[LinePosition::Title], LineSeparator::new('═', '╪', '╞', '╡'))
+            .separators(&[LinePosition::Bottom], *ARC_BOT_SEP)
+            .padding(1, 1)
+            .build();
+
+        /// A table with borders and delimiters made with box characters
+        ///
+        /// # Example
+        /// ```text
+        /// ╭────┬────╮
+        /// │ T1 │ T2 │
+        /// ├────┼────┤
+        /// │ a  │ b  │
+        /// │ c  │ d  │
+        /// ╰────┴────╯
+        /// ```
+        pub static ref FORMAT_ARC_NO_LINESEP_WITH_TITLE: TableFormat = FormatBuilder::new()
+            .column_separator('│')
+            .borders('│')
+            .separator(LinePosition::Title, *BOX_MID_SEP)
+            .separator(LinePosition::Bottom, *ARC_BOT_SEP)
+            .separator(LinePosition::Top, *ARC_TOP_SEP)
+            .padding(1, 1)
+            .build();
     }
 }
