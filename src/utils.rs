@@ -3,7 +3,7 @@ use std::fmt;
 use std::io::{Error, ErrorKind, Write};
 use std::str;
 
-use unicode_width::{UnicodeWidthChar, UnicodeWidthStr};
+use unicode_width::UnicodeWidthStr;
 
 use super::format::Alignment;
 
@@ -84,54 +84,7 @@ pub fn print_align<T: Write + ?Sized>(
 /// Return the display width of a unicode string.
 /// This functions takes ANSI-escaped color codes into account.
 pub fn display_width(text: &str) -> usize {
-    #[derive(PartialEq, Eq, Clone, Copy)]
-    enum State {
-        /// We are not inside any terminal escape.
-        Normal,
-        /// We have just seen a \u{1b}
-        EscapeChar,
-        /// We have just seen a [
-        OpenBracket,
-        /// We just ended the escape by seeing an m
-        AfterEscape,
-    }
-
-    let width = UnicodeWidthStr::width(text);
-    let mut state = State::Normal;
-    let mut hidden = 0;
-
-    for c in text.chars() {
-        state = match (state, c) {
-            (State::Normal, '\u{1b}') => State::EscapeChar,
-            (State::EscapeChar, '[') => State::OpenBracket,
-            (State::EscapeChar, _) => State::Normal,
-            (State::OpenBracket, 'm') => State::AfterEscape,
-            _ => state,
-        };
-
-        // We don't count escape characters as hidden as
-        // UnicodeWidthStr::width already considers them.
-        if matches!(state, State::OpenBracket | State::AfterEscape) {
-            // but if we see an escape char *inside* the ANSI escape, we should ignore it.
-            if UnicodeWidthChar::width(c).unwrap_or(0) > 0 {
-                hidden += 1;
-            }
-        }
-
-        if state == State::AfterEscape {
-            state = State::Normal;
-        }
-    }
-
-    assert!(
-        width >= hidden,
-        "internal error: width {} less than hidden {} on string {:?}",
-        width,
-        hidden,
-        text
-    );
-
-    width - hidden
+    UnicodeWidthStr::width(strip_ansi_escapes::strip_str(text).as_str())
 }
 
 /// Wrapper struct which will emit the HTML-escaped version of the contained
@@ -230,5 +183,14 @@ mod tests {
         let mut out = StringWriter::new();
         let res = out.write_all(&[0, 255]);
         assert!(res.is_err());
+    }
+
+    #[test]
+    fn display_width_calculation() {
+        assert_eq!(display_width("ASCII text"), 10);
+        assert_eq!(display_width(" ASCII\r\ntext with\nspaces "), 24);
+
+        assert_eq!(display_width("Не-ASCII текст"), 14);
+        assert_eq!(display_width("Colored \u{1B}[2mне-ASCII\u{1B}[0m текст"), 22);
     }
 }

@@ -17,8 +17,8 @@ impl<'a> super::TableSlice<'a> {
     ///
     /// This allows for format customisation.
     pub fn to_csv_writer<W: Write>(&self, mut writer: Writer<W>) -> Result<Writer<W>> {
-        for title in self.titles {
-            writer.write_record(title.iter().map(|c| c.get_content()))?;
+        if let Some(titles) = self.titles {
+            writer.write_record(titles.iter().map(|c| c.get_content()))?;
         }
         for row in self.rows {
             writer.write_record(row.iter().map(|c| c.get_content()))?;
