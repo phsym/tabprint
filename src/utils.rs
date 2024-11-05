@@ -184,4 +184,13 @@ mod tests {
         let res = out.write_all(&[0, 255]);
         assert!(res.is_err());
     }
+
+    #[test]
+    fn display_width_calculation() {
+        assert_eq!(display_width("ASCII text"), 10);
+        assert_eq!(display_width(" ASCII\r\ntext with\nspaces "), 24);
+
+        assert_eq!(display_width("Не-ASCII текст"), 14);
+        assert_eq!(display_width("Colored \u{1B}[2mне-ASCII\u{1B}[0m текст"), 22);
+    }
 }
